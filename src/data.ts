@@ -94,7 +94,7 @@ export const placeholderGames: GameEntry[] = [
     notes: 'Heard great things about the style and music. Need a huge chunk of free time to start this one.',
     coverImage: '/images/persona_5_royal.jpg',
     dateAdded: '2024-05-01'
-  }
+  },
   {
     id: '9',
     title: 'Starseeker: Astroneer',
