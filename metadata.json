@@ -1,6 +1,0 @@
-{
-  "name": "QuestLog",
-  "description": "A personal gaming journal to track played games, completion statuses, ratings, and notes.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
