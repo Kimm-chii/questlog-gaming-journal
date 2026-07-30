@@ -1,82 +1,36 @@
-🎮 QuestLog
+# QuestLog — Personal Game Archive
 
-QuestLog is a modern personal gaming journal designed to help you organize and track your gaming journey. Whether you're clearing your backlog, keeping track of your current adventures, or remembering your favorite titles, QuestLog keeps everything in one clean and intuitive interface.
+A simple curated space for the interactive worlds I've explored. Tracking victories, reflections, and the backlog of adventures yet to come.
 
-✨ Features
-🎮 Personal Game Library
+## ✦ Core Focus
 
-Build your own collection of games with beautiful cover artwork and organized game cards.
+- **Interface Design**: Minimalist aesthetics inspired by Japanese Yohaku (余白), focusing on balance, clarity, and intentional space.
+- **Personal Archiving**: A simple, unified collection for tracking gaming experiences across different platforms and statuses.
+- **Frontend Implementation**: Designing and implementing responsive interfaces with modern frontend tools.
 
-🔍 Instant Search
+## 🛠️ Development Process
 
-Quickly search your library by game title to find what you're looking for in seconds.
+This project was developed through an AI-assisted creative workflow, using AI as a tool for faster prototyping, exploration, and refinement.
 
-🏷️ Status Tracking
+AI supports the workflow, but the creative direction, design decisions, and final experience are guided by human intent.
 
-Categorize every game using easy-to-manage status tags:
+My primary focus and contributions include:
 
-🎮 Playing
-✅ Completed
-📅 Plan to Play
-❌ Dropped
-📱 Responsive Design
+- Defining UI and visual direction
+- Making interface design decisions
+- Customizing and refining components
+- Implementing frontend interactions
+- Optimizing responsive experiences
+- Testing, refining, and deploying the project
 
-Optimized for desktop, tablet, and mobile devices.
+## ⚙️ Tech Stack
 
-🌙 Modern Gaming UI
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Motion
 
-A sleek dark-themed interface inspired by modern gaming platforms.
+## 📄 License
 
-⚡ Smooth User Experience
-
-Built with fast navigation, subtle animations, and a clean layout for effortless browsing.
-
-🛠 Tech Stack
-React
-Vite
-TypeScript
-Tailwind CSS
-🚀 Live Demo
-
-Coming Soon
-
-📸 Screenshots
-
-Add screenshots or GIFs of your application here.
-
-Home Page
-Search Functionality
-Status Tags
-Mobile Layout
-📂 Project Structure
-src/
-├── assets/
-├── components/
-├── data/
-├── types/
-├── App.tsx
-└── main.tsx
-💻 Getting Started
-git clone https://github.com/your-username/questlog.git
-
-cd questlog
-
-npm install
-
-npm run dev
-🎯 Roadmap
-
-Planned features for future updates:
-
-⭐ Favorites
-🎮 Platform filters
-🏷️ Genre filters
-📅 Recently Played
-📊 Gaming statistics
-📝 Personal reviews and notes
-⏱️ Playtime tracking
-☁️ Cloud synchronization
-🎨 Theme customization
-📄 License
-
-This project was created for learning, portfolio, and personal showcase purposes.
+This project is open-source and available under the MIT License.
