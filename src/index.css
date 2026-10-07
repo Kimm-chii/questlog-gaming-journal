@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
 }
 
 @layer base {
@@ -12,6 +13,13 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tight;
+    font-stretch: 118%;
+  }
+
+  .wordmark {
+    @apply font-display font-extrabold uppercase;
+    font-stretch: 125%;
+    letter-spacing: 0.28em;
   }
 
   [hidden] { display: none !important; }
