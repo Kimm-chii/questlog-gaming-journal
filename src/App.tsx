@@ -9,8 +9,8 @@ import { GameCard } from './components/GameCard';
 import { CompactGameCard } from './components/CompactGameCard';
 import GrainOverlay from './components/GrainOverlay';
 import { GameStatus } from './types';
-import { Search, LayoutGrid, List, Hexagon, SearchX } from 'lucide-react';
-import { motion } from 'motion/react';
+import { Search, LayoutGrid, List, SearchX } from 'lucide-react';
+import { motion, MotionConfig } from 'motion/react';
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -41,6 +41,12 @@ export default function App() {
   const playingCount = statusCounts['Playing'] ?? 0;
   const completedCount = statusCounts['Completed'] ?? 0;
 
+  // Hero covers: current games first, topped up from the rest of the list
+  const nowPlaying = [
+    ...placeholderGames.filter((g) => g.status === 'Playing'),
+    ...placeholderGames.filter((g) => g.status !== 'Playing'),
+  ].slice(0, 3);
+
   const scrollToTop = (e: React.MouseEvent) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -57,78 +63,91 @@ export default function App() {
   };
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="min-h-screen flex flex-col bg-zinc-950 font-sans">
       <GrainOverlay />
 
-      {/* Floating navbar */}
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl">
-        <div className="flex items-center justify-between px-3 py-2.5 bg-zinc-900/60 backdrop-blur-xl border border-zinc-800/80 rounded-full shadow-2xl">
-          {/* Logo */}
-          <button onClick={scrollToTop} className="flex items-center gap-3 pl-2 group cursor-pointer">
-            <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-amber-950 to-amber-800 border border-amber-700/50 shadow-inner group-hover:scale-105 transition-transform">
-              <Hexagon className="w-5 h-5 text-amber-300 group-hover:rotate-90 transition-transform duration-700" />
-            </div>
-            <span className="text-base font-display font-bold tracking-wide text-white transition-colors group-hover:text-amber-200">
-              QuestLog
-            </span>
+      {/* Top bar */}
+      <nav className="fixed top-0 inset-x-0 z-50 bg-zinc-950/85 backdrop-blur-md border-b border-zinc-900">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+          {/* Wordmark */}
+          <button onClick={scrollToTop} className="flex items-center group cursor-pointer" aria-label="QuestLog, back to top">
+            <span className="wordmark text-[15px] text-white">QuestLog</span>
+            <span aria-hidden="true" className="ml-1 inline-block w-[7px] h-[15px] bg-amber-400 group-hover:bg-amber-200 transition-colors" />
           </button>
 
           {/* CTA */}
           <button
             onClick={scrollToLibrary}
-            className="flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 text-sm font-semibold rounded-full transition-all duration-300 border border-zinc-700/50 hover:border-zinc-600 hover:-translate-y-0.5"
+            className="flex items-center gap-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
           >
             <span>Library</span>
-            <span className="text-xs text-zinc-500 font-normal">· {placeholderGames.length}</span>
+            <span className="font-mono text-xs text-zinc-600 tabular-nums">{String(placeholderGames.length).padStart(2, '0')}</span>
           </button>
         </div>
       </nav>
 
       <main className="flex-1 w-full mx-auto flex flex-col relative">
         {/* Hero */}
-        <section className="relative pt-48 pb-20 px-6 w-full max-w-5xl mx-auto flex flex-col z-10 overflow-hidden">
-          {/* Ambient glow */}
-          <div
-            aria-hidden="true"
-            className="absolute left-0 top-1/3 w-[480px] h-[280px] bg-amber-500/[0.07] rounded-full blur-3xl pointer-events-none -translate-x-1/4"
-          />
-
-          {/* Decorative total count — large background type */}
-          <div
-            aria-hidden="true"
-            className="absolute right-0 top-1/2 -translate-y-1/2 text-[13rem] font-display font-bold text-zinc-900 leading-none select-none pointer-events-none hidden lg:block"
-          >
-            {placeholderGames.length}
-          </div>
-
+        <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 px-6 w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12 lg:gap-16 items-end z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="flex flex-col items-center md:items-start text-center md:text-left relative z-10"
+            className="flex flex-col items-start text-left lg:pb-4"
           >
-            <p className="text-xs font-medium text-zinc-700 tracking-[0.25em] uppercase mb-8">
-              Personal Archive
-            </p>
-            <h1 className="text-5xl md:text-7xl font-display font-bold tracking-tight text-white mb-6 leading-[1.05]">
-              The games<br className="hidden md:block" /> I've lived in.
+            <h1 className="text-[2.6rem] sm:text-5xl lg:text-[3.5rem] font-display font-extrabold text-white mb-6 leading-[1]">
+              The games I've lived in.
             </h1>
-            <p className="text-base md:text-lg text-zinc-500 max-w-xl font-light leading-relaxed">
-              <span className="text-zinc-200 font-normal">{placeholderGames.length} entries.</span>{' '}
+            <p className="text-base md:text-lg text-zinc-400 max-w-md leading-relaxed">
+              <span className="text-zinc-100">{placeholderGames.length} entries.</span>{' '}
               {playingCount > 0 && <>{playingCount} still running. </>}
               {completedCount > 0 && <>{completedCount} cleared. </>}
               A few I probably should've finished.
             </p>
+            <button
+              onClick={scrollToLibrary}
+              className="mt-8 text-sm font-medium text-amber-300 hover:text-amber-200 underline underline-offset-[6px] decoration-amber-300/40 hover:decoration-amber-200 transition-colors"
+            >
+              Browse the library
+            </button>
           </motion.div>
+
+          {/* Now playing covers */}
+          <div>
+            <p className="font-mono text-xs text-zinc-500 mb-4">Now playing</p>
+            <div className="grid grid-cols-3 gap-3 sm:gap-4">
+              {nowPlaying.map((game, i) => (
+                <motion.figure
+                  key={game.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.15 + i * 0.1, ease: 'easeOut' }}
+                  className={i === 1 ? 'sm:translate-y-6' : ''}
+                >
+                  <div className="aspect-[2/3] bg-zinc-900 overflow-hidden rounded-[3px] ring-1 ring-white/10 shadow-2xl shadow-black/60">
+                    {game.coverImage && (
+                      <img src={game.coverImage} alt={game.title} className="w-full h-full object-cover" />
+                    )}
+                  </div>
+                  <figcaption className="mt-3 text-xs sm:text-sm text-zinc-300 font-medium leading-snug line-clamp-2">
+                    {game.title}
+                    <span className="block font-mono text-[11px] text-zinc-600 font-normal mt-0.5">{game.platform}</span>
+                  </figcaption>
+                </motion.figure>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* Library */}
-        <div id="library" className="w-full max-w-5xl mx-auto px-6 pb-24 relative z-10 scroll-mt-32">
-          {/* Section divider */}
-          <div className="flex items-center gap-6 mb-12">
-            <div className="h-px flex-1 bg-zinc-900" />
-            <span className="text-xs text-zinc-700 tracking-[0.2em] uppercase font-medium">Library</span>
-            <div className="h-px flex-1 bg-zinc-900" />
+        <div id="library" className="w-full max-w-6xl mx-auto px-6 pb-24 relative z-10 scroll-mt-20">
+          {/* Section heading */}
+          <div className="flex items-baseline justify-between gap-6 mb-8 pt-10 border-t border-zinc-900">
+            <h2 className="text-2xl font-extrabold text-white">Library</h2>
+            <span className="font-mono text-xs text-zinc-600 tabular-nums">
+              {filteredGames.length} of {placeholderGames.length}
+            </span>
           </div>
 
           {/* Controls row */}
@@ -186,7 +205,7 @@ export default function App() {
 
           {/* Results */}
           {filteredGames.length > 0 ? (
-            <div className={layoutMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : 'flex flex-col gap-2.5'}>
+            <div className={layoutMode === 'grid' ? 'grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-10' : 'flex flex-col gap-2.5'}>
               {filteredGames.map((game, index) =>
                 layoutMode === 'grid' ? (
                   <GameCard key={game.id} game={game} index={index} />
@@ -217,16 +236,17 @@ export default function App() {
 
       {/* Footer */}
       <footer className="mt-auto py-10 border-t border-zinc-900/60 relative z-10">
-        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-zinc-700 text-sm">
-            <Hexagon className="w-3.5 h-3.5 text-amber-900" />
-            <span className="font-display font-semibold text-zinc-600">QuestLog</span>
+        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="flex items-center">
+            <span className="wordmark text-xs text-zinc-500">QuestLog</span>
+            <span aria-hidden="true" className="ml-1 inline-block w-[5px] h-[11px] bg-amber-500/70" />
           </div>
-          <p className="text-xs text-zinc-700 font-light">
+          <p className="font-mono text-xs text-zinc-600">
             {placeholderGames.length} games tracked &middot; Built for fun
           </p>
         </div>
       </footer>
     </div>
+    </MotionConfig>
   );
 }

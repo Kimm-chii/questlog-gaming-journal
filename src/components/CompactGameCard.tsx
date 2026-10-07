@@ -2,7 +2,7 @@ import React from 'react';
 import { GameEntry } from '../types';
 import { StatusBadge } from './StatusBadge';
 import { RatingStars } from './RatingStars';
-import { Calendar, MonitorPlay } from 'lucide-react';
+import { MonitorPlay } from 'lucide-react';
 import { motion } from 'motion/react';
 
 const statusBorder: Record<string, string> = {
@@ -19,14 +19,15 @@ export function CompactGameCard({ game, index = 0 }: { game: GameEntry; index?: 
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.04, ease: 'easeOut' }}
-      className={`group flex flex-row items-center bg-zinc-900/40 border border-zinc-800/60 border-l-2 ${statusBorder[game.status]} rounded-lg overflow-hidden hover:border-zinc-700/50 hover:bg-zinc-900/60 transition-all duration-200 shadow-sm hover:shadow-md p-3 pr-5 gap-4`}
+      className={`group flex flex-row items-center bg-zinc-900/40 border border-zinc-800/60 border-l-2 ${statusBorder[game.status]} rounded-[3px] overflow-hidden hover:border-zinc-700/50 hover:bg-zinc-900/60 transition-colors duration-200 p-2.5 pr-5 gap-4`}
     >
-      <div className="relative h-12 w-12 shrink-0 bg-zinc-800 rounded overflow-hidden hidden sm:block">
+      <div className="relative h-[72px] w-12 shrink-0 bg-zinc-800 rounded-[2px] overflow-hidden ring-1 ring-white/10">
         {game.coverImage ? (
           <img
             src={game.coverImage}
             alt={game.title}
-            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-300"
+            loading="lazy"
+            className="w-full h-full object-cover"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center">
@@ -38,10 +39,7 @@ export function CompactGameCard({ game, index = 0 }: { game: GameEntry; index?: 
       <div className="flex flex-col min-w-0 flex-grow gap-1 justify-center">
         <div className="flex items-center gap-3">
           <h3 className="text-base font-display font-bold text-white truncate">{game.title}</h3>
-          <div className="hidden sm:flex items-center text-zinc-600 text-xs gap-1 shrink-0">
-            <MonitorPlay className="w-3 h-3" />
-            <span>{game.platform}</span>
-          </div>
+          <span className="hidden sm:inline font-mono text-[11px] text-zinc-600 shrink-0">{game.platform}</span>
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <StatusBadge status={game.status} />
@@ -66,8 +64,7 @@ export function CompactGameCard({ game, index = 0 }: { game: GameEntry; index?: 
         )}
       </div>
 
-      <div className="hidden md:flex items-center text-xs text-zinc-600 shrink-0 w-28 justify-end">
-        <Calendar className="w-3.5 h-3.5 mr-1.5" />
+      <div className="hidden md:flex items-center font-mono text-[11px] text-zinc-600 shrink-0 w-28 justify-end">
         <span>{new Date(game.dateAdded + 'T00:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
       </div>
     </motion.div>

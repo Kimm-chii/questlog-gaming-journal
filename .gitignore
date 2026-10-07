@@ -8,3 +8,4 @@ coverage/
 !.env.example
 metadata.json
 .env.example
+AI_CONTEXT.md
