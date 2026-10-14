@@ -64,7 +64,7 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="min-h-screen flex flex-col bg-zinc-950 font-sans">
+    <div className="min-h-[calc(var(--sh,1vh)*100)] flex flex-col bg-zinc-950 font-sans">
       <GrainOverlay />
 
       {/* Top bar */}

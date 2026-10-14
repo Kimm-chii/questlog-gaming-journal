@@ -28,3 +28,8 @@
 html {
   touch-action: manipulation;
 }
+
+/* In-app browsers: no rubber-band bounce at the page edges */
+html {
+  overscroll-behavior: none;
+}
