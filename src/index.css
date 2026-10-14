@@ -24,3 +24,7 @@
 
   [hidden] { display: none !important; }
 }
+
+html {
+  touch-action: manipulation;
+}
